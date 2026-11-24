@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sổ chi tiêu &amp; lịch tuần</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-:root{--bg:#f2f3f5;--surf:#fbfbfc;--ink:#15181d;--mute:#6a7078;--line:#d9dce1;--bad:#d4412a;--good:#14825d;--warn:#b7791f;
+:root{color-scheme:dark;--bg:#0a0a0b;--surf:#151517;--ink:#ffffff;--mute:#c2c2c8;--line:#3a3a3f;--red:#ff4d4f;--orange:#ffa53a;--bad:#ff4d4f;--good:#ff4d4f;--warn:#ff4d4f;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101216;--surf:#171a20;--ink:#eceef1;--mute:#8d949d;--line:#2a2f37;--bad:#ef7a64;--good:#3fc18f;--warn:#e0b04a;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#101216;--surf:#171a20;--ink:#eceef1;--mute:#8d949d;--line:#2a2f37;--bad:#ef7a64;--good:#3fc18f;--warn:#e0b04a;color-scheme:dark}
+
+
 *{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Be Vietnam Pro","Segoe UI",system-ui,sans-serif}
-.n{font-family:"Space Grotesk","Be Vietnam Pro",system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 "Lexend","Segoe UI",system-ui,sans-serif}
+.n{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .wrap{max-width:960px;margin:0 auto;padding:18px 16px 40px}
 header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:6px}
 h1{font-size:1.25rem;font-weight:700;margin:0;letter-spacing:-.02em}
@@ -26,9 +26,9 @@ h2{font-size:.95rem;font-weight:600;margin:0 0 10px}
 .strip{display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px}
 .strip>div{padding:0 14px;border-left:1px solid var(--line)}.strip>div:first-child{padding-left:0;border:0}
 .strip small,.lbl{color:var(--mute);font-size:.8rem}
-.big{display:block;font-size:1.7rem;font-weight:600;line-height:1.2;margin:2px 0}
+.big{display:block;font-size:1.7rem;font-weight:600;line-height:1.2;margin:2px 0;color:var(--ink)}
 @media(max-width:560px){.big{font-size:1.15rem}.strip>div{padding:0 8px}}
-.d{font-size:.8rem;font-weight:500;color:var(--mute)}.d.bad{color:var(--bad)}.d.good{color:var(--good)}
+.d{font-size:.8rem;font-weight:500;color:var(--mute)}.d.bad,.d.good{color:var(--ink)}
 .two{display:grid;grid-template-columns:1fr;gap:18px}
 @media(min-width:720px){.two{grid-template-columns:1fr 1fr;gap:28px}}
 .cmp .big{font-size:1.5rem}
@@ -36,14 +36,14 @@ h2{font-size:.95rem;font-weight:600;margin:0 0 10px}
 .row,form{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
 label{display:flex;flex-direction:column;font-size:.78rem;color:var(--mute);gap:3px;flex:1 1 120px}
 input,select{font:inherit;color:var(--ink);background:var(--surf);border:1px solid var(--line);border-radius:4px;padding:8px 9px;width:100%}
-.btn{background:var(--ink);color:var(--bg);border:0;border-radius:4px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer}
+.btn{background:#2c2c31;color:var(--ink);border:1px solid var(--ink);border-radius:4px;padding:8px 16px;font:inherit;font-weight:600;cursor:pointer}
 table{width:100%;border-collapse:collapse;font-size:.9rem}
 th{font-weight:500;color:var(--mute);text-align:right;padding:4px 0;font-size:.8rem}th:first-child,td:first-child{text-align:left}
 td{padding:7px 0;border-top:1px solid var(--line);text-align:right}
 .chart{display:flex;align-items:flex-end;gap:2px;height:130px;position:relative;margin-top:8px}
 .chart .c{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;position:relative}
-.chart .b{width:100%;background:var(--ink);min-height:1px}
-.chart .c.t .b{background:var(--bad)}.chart .c.f .b{background:var(--line)}
+.chart .b{width:100%;background:#8f8f98;min-height:1px}
+.chart .c.t .b{background:var(--ink)}.chart .c.f .b{background:var(--line)}
 .chart .c span{position:absolute;bottom:-17px;font-size:.62rem;color:var(--mute)}
 .avg{position:absolute;left:0;right:0;border-top:1px dashed var(--mute);pointer-events:none}
 .avg em{position:absolute;right:0;top:-17px;font-size:.7rem;font-style:normal;color:var(--mute);background:var(--bg);padding:0 3px}
@@ -55,23 +55,26 @@ td{padding:7px 0;border-top:1px solid var(--line);text-align:right}
 .tt{overflow-x:auto;border:1px solid var(--line);background:var(--surf);margin-top:10px}
 .tt-in{display:grid;grid-template-columns:46px repeat(7,minmax(96px,1fr));min-width:760px}
 .hd{padding:7px 4px;text-align:center;font-weight:600;font-size:.85rem;border-bottom:1px solid var(--line)}
-.hd.today{background:var(--ink);color:var(--bg)}
+.hd.today{background:#2c2c31;color:var(--ink);box-shadow:inset 0 -2px 0 var(--ink)}
 .hrs div{height:48px;font-size:.7rem;color:var(--mute);text-align:right;padding:1px 6px}
 .col{position:relative;border-left:1px solid var(--line);height:calc(48px * 17);background:repeating-linear-gradient(transparent 0 47px,var(--line) 47px 48px)}
 .ev{position:absolute;left:2px;right:2px;padding:3px 6px;font:inherit;font-size:.76rem;line-height:1.25;color:var(--ink);overflow:hidden;cursor:pointer;border:0;text-align:left;border-radius:2px}
 .ev small{display:block;color:var(--mute)}
 .hint{color:var(--mute);font-size:.82rem;margin:8px 0 0}
+td.n{color:var(--ink)}
+td.n+td.n{color:var(--mute)}
+.pomo+.row .hint{color:var(--ink)}
 .pomo{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
 .clock{font-size:3.4rem;font-weight:600;line-height:1}
-.m{color:var(--mute);font-size:.85rem}
-.set{display:flex;gap:8px}.set label{flex:0 0 96px}
-.btn.alt{background:none;color:var(--ink);border:1px solid var(--ink)}
+.m{color:var(--ink);font-size:.85rem}
+.set{display:flex;gap:10px;align-items:flex-end}.set label{flex:0 0 138px;color:var(--ink);font-size:.85rem;font-weight:500;white-space:nowrap}.set input{font-size:1rem;font-weight:600;color:var(--ink)}
+.btn.alt{background:none;color:var(--ink);border:1px solid #5a5a60}
 .btn.sm{padding:6px 11px;font-size:.85rem}
 .selbar{display:none;border:1px solid var(--ink);padding:10px 12px;margin-top:14px;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
 .selbar.on{display:flex}
 .ev.sel1{outline:2px solid var(--ink);z-index:1}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;flex-direction:column;gap:8px;width:min(440px,calc(100% - 24px))}
-.tst{background:var(--ink);color:var(--bg);padding:12px 14px;border-radius:4px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.tst{background:#1d1d20;color:var(--ink);border:1px solid var(--ink);padding:12px 14px;border-radius:4px;display:flex;gap:10px;align-items:center;justify-content:space-between}
 .tst .btn{background:var(--bg);color:var(--ink)}
 </style>
 </head>
@@ -100,6 +103,10 @@ td{padding:7px 0;border-top:1px solid var(--line);text-align:right}
       <div><span class="lbl">Hôm nay so với hôm qua</span><span class="big n" id="cTd">0</span><span id="cTdD"></span><p id="cTdP"></p></div>
       <div><span class="lbl" id="cMLbl">Tháng này so với tháng trước</span><span class="big n" id="cMo">0</span><span id="cMoD"></span><p id="cMoP"></p></div>
     </div>
+    <div class="two cmp" style="margin-top:20px">
+      <div><span class="lbl">Hôm nay so với ngày có chi gần nhất</span><span class="big n" id="cNv">0</span><span id="cNd"></span><p id="cNp"></p></div>
+      <div><span class="lbl">Hai ngày có chi gần nhất trước hôm nay</span><span class="big n" id="cPv">0</span><span id="cPd"></span><p id="cPp"></p></div>
+    </div>
   </div>
 
   <div class="blk">
@@ -114,6 +121,7 @@ td{padding:7px 0;border-top:1px solid var(--line);text-align:right}
       <h2>Ngân sách tháng</h2>
       <div class="row"><label>Hạn mức (đ)<input type="text" inputmode="numeric" autocomplete="off" id="budget" class="n" placeholder="5.000.000"></label><button class="btn" id="saveBudget" type="button">Lưu</button></div>
       <div id="budgetView" style="margin-top:10px"></div>
+      <p class="hint">Chuyển cam khi chi từ 40% hạn mức, chuyển đỏ khi chi từ 50%.</p>
     </div>
   </div>
   <div class="blk"><h2>Lịch hôm nay</h2><div id="todayEv"></div></div>
@@ -204,6 +212,7 @@ $("nav").onclick=function(e){var t=e.target.dataset.t;if(!t)return;
 function prevM(m){var p=m.split("-");var d=new Date(+p[0],+p[1]-2,1);return d.getFullYear()+"-"+pad(d.getMonth()+1)}
 function sum(type,pred){var s=0;S.tx.forEach(function(t){if(t.type===type&&pred(t))s+=t.amt});return s}
 function inM(m,upto){return function(t){return t.date.slice(0,7)===m&&+t.date.slice(8)<=upto}}
+function dlab(k){var p=k.split("-"),d=new Date(+p[0],+p[1]-1,+p[2]),t=new Date(today.getFullYear(),today.getMonth(),today.getDate()),n=Math.round((t-d)/864e5);return DAYS[(d.getDay()+6)%7]+" "+p[2]+"/"+p[1]+(n===1?" (hôm qua)":n>1?" ("+n+" ngày trước)":"")}
 function delta(cur,prev,badUp){
   if(!cur&&!prev)return"<span class='d'>chưa có dữ liệu</span>";
   var diff=cur-prev;if(diff===0)return"<span class='d'>không đổi</span>";
@@ -217,13 +226,20 @@ function render(){
   var inc=sum("inc",inM(m,31)),exp=sum("exp",inM(m,31));
   var pIncS=sum("inc",inM(pm,cut)),pExpS=sum("exp",inM(pm,cut)),pExpAll=sum("exp",inM(pm,31));
   var vs=isCur?"cùng kỳ tháng trước":"tháng trước";
-  $("sInc").textContent=fmt(inc);$("sExp").textContent=fmt(exp);var bud=S.budget[m]||0,rem=bud?bud-exp:inc-exp;$("sBalL").textContent=bud?"Ngân sách còn lại":"Còn lại (thu − chi)";$("sBal").textContent=fmt(rem);$("sBal").style.color=rem<0?"var(--bad)":"";
+  $("sInc").textContent=fmt(inc);$("sExp").textContent=fmt(exp);var bud=S.budget[m]||0,rem=bud?bud-exp:inc-exp;$("sBalL").textContent=bud?"Ngân sách còn lại":"Còn lại (thu − chi)";$("sBal").textContent=fmt(rem);var over=bud?exp>bud:(inc>0&&exp>inc),lvl=bud?(exp>=bud*.5?"var(--red)":exp>=bud*.4?"var(--orange)":""):(over?"var(--red)":"");$("sBal").style.color=lvl;$("sExp").style.color=over?"var(--red)":"";$("cMo").style.color=over?"var(--red)":"";
   $("dInc").innerHTML=delta(inc,pIncS,false);$("dExp").innerHTML=delta(exp,pExpS,true);
   $("dBal").textContent=bud?"Hạn mức "+fmt(bud)+(inc>0?", thu − chi: "+fmt(inc-exp):""):(inc>0?"Giữ lại "+Math.round((inc-exp)/inc*100)+"% thu nhập":"Chưa nhập thu nhập");
 
   var td=sum("exp",function(t){return t.date===todayStr}),yd=sum("exp",function(t){return t.date===yestStr});
   $("cTd").textContent=fmt(td);$("cTdD").innerHTML=delta(td,yd,true);
   $("cTdP").textContent="Hôm qua chi "+fmt(yd)+".";
+  var byDay={};S.tx.forEach(function(t){if(t.type==="exp"&&t.date<todayStr)byDay[t.date]=(byDay[t.date]||0)+t.amt});
+  var past=Object.keys(byDay).sort().reverse();
+  $("cNv").textContent=fmt(td);
+  if(past.length){var l1=past[0];$("cNd").innerHTML=delta(td,byDay[l1],true);$("cNp").textContent="Ngày có chi gần nhất là "+dlab(l1)+", chi "+fmt(byDay[l1])+"."}
+  else{$("cNd").innerHTML="";$("cNp").textContent="Chưa có ngày chi nào trước hôm nay để so sánh."}
+  if(past.length>1){var aa=past[0],bb=past[1];$("cPv").textContent=fmt(byDay[aa]);$("cPd").innerHTML=delta(byDay[aa],byDay[bb],true);$("cPp").textContent=dlab(aa)+" so với "+dlab(bb)+", chi "+fmt(byDay[bb])+"."}
+  else{$("cPv").textContent=fmt(past.length?byDay[past[0]]:0);$("cPd").innerHTML="";$("cPp").textContent="Cần ít nhất 2 ngày có chi trước hôm nay để so sánh."}
   $("cMLbl").textContent=isCur?"Tháng này so với cùng kỳ tháng trước":"Tổng chi so với tháng trước";
   $("cMo").textContent=fmt(exp);$("cMoD").innerHTML=delta(exp,pExpS,true);
   var note="Cả tháng trước chi "+fmt(pExpAll)+".";
@@ -237,7 +253,7 @@ function render(){
   if(mx&&avg>0)h+="<div class='avg' style='bottom:"+(avg/mx*100)+"%'><em class='n'>TB "+fmt(avg)+"/ngày</em></div>";
   $("chart").innerHTML=h;
   var mxDay=daily.indexOf(mx)+1;
-  $("chartNote").textContent=mx?"Ngày chi nhiều nhất: "+mxDay+"/"+mo+" ("+fmt(mx)+"). Ngày hôm nay tô đỏ, di chuột vào cột để xem số tiền.":"Chưa có khoản chi nào trong tháng này.";
+  $("chartNote").textContent=mx?"Ngày chi nhiều nhất: "+mxDay+"/"+mo+" ("+fmt(mx)+"). Cột hôm nay tô trắng, di chuột vào cột để xem số tiền.":"Chưa có khoản chi nào trong tháng này.";
 
   var by={},pby={};S.tx.forEach(function(t){if(t.type!=="exp")return;
     if(inM(m,31)(t))by[t.cat]=(by[t.cat]||0)+t.amt;
@@ -247,12 +263,12 @@ function render(){
     return"<tr><td>"+esc(k)+"</td><td class='n'>"+fmt(a)+"</td><td class='n'>"+fmt(b)+"</td><td>"+delta(a,b,true).replace(/ \(.*?\)/,"")+"</td></tr>"}).join("")+"</table>":"<p class='empty'>Chưa có khoản chi nào.</p>";
 
   var b=S.budget[m]||0;$("budget").value=b?b.toLocaleString("vi-VN"):"";
-  if(b){var pc=Math.min(100,exp/b*100),col=exp>b?"var(--bad)":pc>80?"var(--warn)":"var(--ink)";
-    $("budgetView").innerHTML="<div class='n'>"+fmt(exp)+" / "+fmt(b)+" ("+Math.round(exp/b*100)+"%)</div><div class='bar'><i style='width:"+pc+"%;background:"+col+"'></i></div><p class='hint'>"+(exp>b?"Vượt hạn mức "+fmt(exp-b)+".":"Còn được chi "+fmt(b-exp)+(isCur&&cut<dim?", tức khoảng "+fmt((b-exp)/(dim-cut))+"/ngày cho "+(dim-cut)+" ngày còn lại.":"."))+"</p>"}
+  if(b){var pc=Math.min(100,exp/b*100),col=lvl||"var(--ink)";
+    $("budgetView").innerHTML="<div class='n' style='color:"+(lvl||"var(--ink)")+"'>"+fmt(exp)+" / "+fmt(b)+" ("+Math.round(exp/b*100)+"%)</div><div class='bar'><i style='width:"+pc+"%;background:"+col+"'></i></div><p class='hint'>"+(exp>b?"<b style='color:var(--red)'>Vượt hạn mức "+fmt(exp-b)+".</b>":"Còn được chi "+fmt(b-exp)+(isCur&&cut<dim?", tức khoảng "+fmt((b-exp)/(dim-cut))+"/ngày cho "+(dim-cut)+" ngày còn lại.":"."))+"</p>"}
   else $("budgetView").innerHTML="<p class='empty'>Nhập hạn mức để theo dõi mức chi trong tháng.</p>";
 
   var list=S.tx.filter(function(t){return t.date.slice(0,7)===m}).sort(function(a,c){return c.date<a.date?-1:1});
-  $("txList").innerHTML=list.length?list.map(function(t){return"<div class='tx'><span class='dt n'>"+t.date.slice(8)+"/"+t.date.slice(5,7)+"</span><div>"+esc(t.note||t.cat)+"<small>"+esc(t.cat)+"</small></div><b class='n' style='color:var(--"+(t.type==="inc"?"good":"bad")+")'>"+(t.type==="inc"?"+":"−")+fmt(t.amt)+"</b><button class='x' data-id='"+t.id+"' aria-label='Xóa'>✕</button></div>"}).join(""):"<p class='empty'>Chưa có giao dịch nào trong tháng này.</p>";
+  $("txList").innerHTML=list.length?list.map(function(t){return"<div class='tx'><span class='dt n'>"+t.date.slice(8)+"/"+t.date.slice(5,7)+"</span><div>"+esc(t.note||t.cat)+"<small>"+esc(t.cat)+"</small></div><b class='n'>"+(t.type==="inc"?"+":"−")+fmt(t.amt)+"</b><button class='x' data-id='"+t.id+"' aria-label='Xóa'>✕</button></div>"}).join(""):"<p class='empty'>Chưa có giao dịch nào trong tháng này.</p>";
 }
 $("month").onchange=render;
 $("budget").addEventListener("change",function(){S.budget[$("month").value]=num($("budget").value);save();render()});
