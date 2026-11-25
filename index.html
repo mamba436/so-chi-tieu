@@ -48,9 +48,10 @@ td{padding:7px 0;border-top:1px solid var(--line);text-align:right}
 .avg{position:absolute;left:0;right:0;border-top:1px dashed var(--mute);pointer-events:none}
 .avg em{position:absolute;right:0;top:-17px;font-size:.7rem;font-style:normal;color:var(--mute);background:var(--bg);padding:0 3px}
 .bar{height:5px;background:var(--line);margin-top:5px}.bar i{display:block;height:100%;background:var(--ink)}
-.tx{display:grid;grid-template-columns:52px 1fr auto auto;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.tx{display:grid;grid-template-columns:52px 1fr auto auto auto;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
 .tx .dt{color:var(--mute);font-size:.82rem}.tx small{color:var(--mute);display:block}
 .x{background:none;border:0;color:var(--mute);cursor:pointer;font-size:1rem;padding:2px 6px}
+.x.ed{font-size:.8rem;text-decoration:underline;color:var(--ink)}
 .empty{color:var(--mute);padding:8px 0;margin:0}
 .tt{overflow-x:auto;border:1px solid var(--line);background:var(--surf);margin-top:10px}
 .tt-in{display:grid;grid-template-columns:46px repeat(7,minmax(96px,1fr));min-width:760px}
@@ -268,15 +269,24 @@ function render(){
   else $("budgetView").innerHTML="<p class='empty'>Nhập hạn mức để theo dõi mức chi trong tháng.</p>";
 
   var list=S.tx.filter(function(t){return t.date.slice(0,7)===m}).sort(function(a,c){return c.date<a.date?-1:1});
-  $("txList").innerHTML=list.length?list.map(function(t){return"<div class='tx'><span class='dt n'>"+t.date.slice(8)+"/"+t.date.slice(5,7)+"</span><div>"+esc(t.note||t.cat)+"<small>"+esc(t.cat)+"</small></div><b class='n'>"+(t.type==="inc"?"+":"−")+fmt(t.amt)+"</b><button class='x' data-id='"+t.id+"' aria-label='Xóa'>✕</button></div>"}).join(""):"<p class='empty'>Chưa có giao dịch nào trong tháng này.</p>";
+  $("txList").innerHTML=list.length?list.map(function(t){return"<div class='tx'><span class='dt n'>"+t.date.slice(8)+"/"+t.date.slice(5,7)+"</span><div>"+esc(t.note||t.cat)+"<small>"+esc(t.cat)+"</small></div><b class='n'>"+(t.type==="inc"?"+":"−")+fmt(t.amt)+"</b><button class='x ed' data-e='"+t.id+"' aria-label='Sửa'>Sửa</button><button class='x' data-id='"+t.id+"' aria-label='Xóa'>✕</button></div>"}).join(""):"<p class='empty'>Chưa có giao dịch nào trong tháng này.</p>";
 }
 $("month").onchange=render;
 $("budget").addEventListener("change",function(){S.budget[$("month").value]=num($("budget").value);save();render()});
 $("saveBudget").onclick=function(){S.budget[$("month").value]=num($("budget").value);save();render()};
 $("txForm").onsubmit=function(e){e.preventDefault();var a=num($("tAmt").value);if(!(a>0))return;
-  S.tx.push({id:uid(),type:$("tType").value,amt:a,cat:$("tCat").value,date:$("tDate").value,note:$("tNote").value.trim()});
-  save();$("tAmt").value="";$("tNote").value="";$("month").value=$("tDate").value.slice(0,7);render()};
-$("txList").onclick=function(e){var id=e.target.dataset.id;if(!id)return;S.tx=S.tx.filter(function(t){return t.id!==id});save();render()};
+  var o={type:$("tType").value,amt:a,cat:$("tCat").value,date:$("tDate").value,note:$("tNote").value.trim()};if(editTx){S.tx.forEach(function(t){if(t.id===editTx)Object.assign(t,o)});editTx=null}else S.tx.push(Object.assign({id:uid()},o));
+  save();$("tAmt").value="";$("tNote").value="";$("month").value=$("tDate").value.slice(0,7);setTxUI();render()};
+var editTx=null,txSub=document.querySelector("#txForm button[type=submit]"),txCancel=document.createElement("button");
+txCancel.type="button";txCancel.className="btn alt";txCancel.textContent="Hủy sửa";txCancel.hidden=true;txSub.after(txCancel);
+function setTxUI(){txSub.textContent=editTx?"Lưu thay đổi":"Thêm";txCancel.hidden=!editTx}
+txCancel.onclick=function(){editTx=null;$("tAmt").value="";$("tNote").value="";$("tDate").value=todayStr;setTxUI()};
+$("txList").onclick=function(e){var d=e.target.dataset;
+  if(d.e){var t=S.tx.filter(function(x){return x.id===d.e})[0];if(!t)return;editTx=t.id;$("tType").value=t.type;fillCats();
+    if(!Array.prototype.some.call($("tCat").options,function(o){return o.value===t.cat})){var op=document.createElement("option");op.textContent=t.cat;$("tCat").appendChild(op)}
+    $("tCat").value=t.cat;$("tAmt").value=t.amt.toLocaleString("vi-VN");$("tDate").value=t.date;$("tNote").value=t.note||"";setTxUI();
+    $("txForm").scrollIntoView({behavior:"smooth",block:"center"});$("tAmt").focus();return}
+  var id=d.id;if(!id)return;S.tx=S.tx.filter(function(t){return t.id!==id});if(editTx===id){editTx=null;setTxUI()}save();render()};
 
 var H0=6,H1=23,PH=48;
 function mins(t){var p=t.split(":");return +p[0]*60+ +p[1]}
@@ -378,6 +388,13 @@ $("bkCopy").onclick=function(){var t=dump();$("bkText").value=t;var fail=functio
 $("bkPick").onclick=function(){$("bkFile").click()};
 $("bkFile").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){loadData(String(r.result))};r.readAsText(f);this.value=""};
 $("bkLoad").onclick=function(){loadData($("bkText").value)};
+function refreshDay(){var n=new Date(),k=ds(n);if(k===todayStr)return;
+  var old=todayStr;today=n;todayStr=k;yest=new Date(n);yest.setDate(yest.getDate()-1);yestStr=ds(yest);
+  if($("tDate").value===old)$("tDate").value=k;
+  if($("month").value===old.slice(0,7))$("month").value=k.slice(0,7);
+  render();renderTT()}
+setInterval(refreshDay,30000);
+document.addEventListener("visibilitychange",refreshDay);window.addEventListener("focus",refreshDay);
 drawP();setEditUI();
 render();renderTT();
 })();
